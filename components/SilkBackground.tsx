@@ -1,0 +1,5 @@
+import { Silk } from './Silk'
+
+export function SilkBackground() {
+  return <div className="silk-background" aria-hidden="true"><Silk speed={5} scale={1} color="#7B7481" noiseIntensity={1.5} rotation={0} /><div className="silk-overlay" /></div>
+}
