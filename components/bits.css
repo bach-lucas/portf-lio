@@ -11,3 +11,4 @@
 .project-gif{display:block;width:100%;height:100%;object-fit:contain;object-position:center;border-radius:1px;filter:saturate(.92)}
 .project-visual:has(.project-gif){background:#f5f1e8!important}.project-visual:has(.project-gif) .project-gif{position:relative;z-index:1}
 .project-open{display:inline-block;margin-top:13px;color:#d9f17e;font:10px var(--mono);text-transform:uppercase;letter-spacing:.04em}.project-open:hover{text-decoration:underline}
+.project-visual.visual-shot:has(.project-gif){background:#0b0b0d!important}.visual-shot .project-gif{object-fit:cover;object-position:top center}
