@@ -104,7 +104,8 @@ const structuredData = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="pt-BR">
+    // o script da abertura (components/cosmos/opening.ts) marca o <html> antes de o React hidratar
+    <html lang="pt-BR" suppressHydrationWarning>
       <body>
         {children}
         <script

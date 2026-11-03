@@ -711,3 +711,162 @@ html:has(.cos-raiz) body {
     animation: none;
   }
 }
+
+/* abertura: só existe com JS e quando o script inline de app/page.tsx marca html[data-intro] */
+.cos-intro {
+  display: none;
+}
+html[data-intro],
+html[data-intro] body {
+  overflow: hidden;
+}
+html[data-intro] .cos-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: block;
+  background: #000;
+}
+.cos-intro-cena {
+  position: absolute;
+  inset: 0;
+}
+.cos-intro-clarao {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  opacity: 0;
+  pointer-events: none;
+}
+.cos-intro-ui {
+  position: absolute;
+  inset: 0;
+  transition: opacity 0.35s;
+}
+.cos-intro-marca {
+  position: absolute;
+  top: 26px;
+  left: max(16px, 4vw);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font: 600 13px var(--display);
+  letter-spacing: 0.08em;
+}
+.cos-intro-marca span {
+  display: inline-grid;
+  place-items: center;
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  background: var(--orange);
+  font-size: 18px;
+}
+.cos-intro-cantos {
+  position: absolute;
+  top: 22px;
+  right: max(16px, 4vw);
+  display: flex;
+  gap: 8px;
+}
+.cos-intro-cantos button {
+  padding: 8px 12px;
+  border: 1px solid var(--hair);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--sub);
+  font: 500 10px var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+.cos-intro-cantos button:hover {
+  color: var(--txt);
+  border-color: rgba(244, 241, 234, 0.4);
+}
+.cos-intro-cantos button[aria-pressed='false'] {
+  color: var(--dim);
+  text-decoration: line-through;
+}
+.cos-intro-cantos span {
+  color: var(--orange);
+}
+.cos-intro-centro {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 9vh;
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  text-align: center;
+}
+.cos-intro-n {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--dim);
+  font: 500 10px var(--mono);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.cos-intro-n i {
+  width: 36px;
+  height: 1px;
+  background: var(--hair);
+}
+.cos-intro-n b {
+  color: var(--txt);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+.cos-intro-entrar {
+  padding: 16px 30px;
+  border: 1px solid rgba(244, 241, 234, 0.35);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.4);
+  color: var(--txt);
+  font: 500 12px var(--mono);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.6s, transform 0.6s, box-shadow 0.3s, background 0.3s;
+}
+.cos-intro.is-pronta .cos-intro-entrar {
+  opacity: 1;
+  transform: none;
+}
+.cos-intro-entrar:hover,
+.cos-intro-entrar:focus-visible {
+  background: rgba(244, 241, 234, 0.08);
+  box-shadow: 0 0 40px rgba(244, 241, 234, 0.18), -2px 0 0 rgba(255, 60, 60, 0.5), 2px 0 0 rgba(60, 120, 255, 0.5);
+  outline: none;
+}
+.cos-intro-dica {
+  color: var(--dim);
+  font: 500 10px var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+/* mergulho: a interface some, o clarão estoura no blast e a abertura inteira revela a nebulosa por baixo */
+.cos-intro.is-mergulho .cos-intro-ui {
+  opacity: 0;
+  pointer-events: none;
+}
+.cos-intro.is-mergulho .cos-intro-clarao {
+  animation: cos-clarao 1.3s ease-out var(--blast) both;
+}
+html[data-intro] .cos-intro.is-mergulho {
+  animation: cos-sumir 1.2s ease-in-out calc(var(--blast) + 0.2s) forwards;
+}
+@keyframes cos-clarao {
+  0% { opacity: 0; }
+  12% { opacity: 0.8; }
+  100% { opacity: 0; }
+}
+@keyframes cos-sumir {
+  to { opacity: 0; }
+}

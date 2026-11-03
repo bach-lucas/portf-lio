@@ -6,9 +6,11 @@ import { experiences } from '../../data/experience'
 import { projectCount, projects } from '../../data/projects'
 import { contactHref, site, socialLinks } from '../../data/site'
 import { PLANET_COLORS } from './formations'
+import { Intro } from './Intro'
 import type { Progress } from './Scene'
 
 const Scene = dynamic(() => import('./Scene'), { ssr: false })
+const IntroScene = dynamic(() => import('./IntroScene'), { ssr: false })
 
 /** Ordem dos atos = ordem das formações em formations.ts. Altura em vh: quanto de rolagem cada astro segura. */
 const ACTS = [
@@ -73,7 +75,8 @@ function Act({ index, className = '', children }: { index: number; className?: s
 export function Cosmos() {
   const progress = useRef<Progress>({ act: 0 }).current
   const root = useRef<HTMLDivElement>(null)
-  const [scene, setScene] = useState<'gpu' | 'software' | null>(null)
+  // undefined até as fontes carregarem e o WebGL ser testado; null = sem cena 3D
+  const [scene, setScene] = useState<'gpu' | 'software' | null>()
 
   useEffect(() => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -161,6 +164,7 @@ export function Cosmos() {
 
   return (
     <div ref={root} className="cos-raiz">
+      <Intro ready={scene !== undefined} scene={(dive) => scene && <WithoutSceneOnError><IntroScene dive={dive} lite={scene === 'software'} /></WithoutSceneOnError>} />
       <div className="cos-barra" aria-hidden="true" />
       <div className="cos-fundo" aria-hidden="true">
         <div className="cos-estrelas" />
