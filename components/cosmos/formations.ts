@@ -276,7 +276,7 @@ function letterSamples(text: string) {
   const ctx = canvas.getContext('2d', { willReadFrequently: true })
   if (!ctx) return []
   ctx.fillStyle = '#fff'
-  ctx.font = '700 210px "Space Grotesk", sans-serif'
+  ctx.font = '600 210px "Space Grotesk", sans-serif'
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
   ctx.fillText(text, w / 2, h / 2 + 8)

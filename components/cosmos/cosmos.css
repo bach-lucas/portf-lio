@@ -1,4 +1,4 @@
-/* Prévia cósmica do portfólio (/previa-cosmos). --p (0..1) é escrito por Cosmos.tsx em cada ato conforme a rolagem; tudo aqui deriva dele. */
+/* Versão cósmica do portfólio (home). --p (0..1) é escrito por Cosmos.tsx em cada ato conforme a rolagem; tudo aqui deriva dele. */
 
 /* o "body { overflow-x: hidden }" global vira caixa de rolagem e o sticky dos palcos deixa de prender; clip corta igual sem isso */
 html:has(.cos-raiz),

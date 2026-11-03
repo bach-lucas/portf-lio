@@ -91,13 +91,16 @@ export function Cosmos() {
       const shift = Math.max(0, track.scrollWidth - track.parentElement.clientWidth)
       track.closest<HTMLElement>('[data-ato]')?.style.setProperty('--shift', `${shift}px`)
     }
-    // linhas com link: fora da janela do ato ficam invisíveis, então saem da ordem do Tab
-    const interactive = Array.from(el.querySelectorAll<HTMLElement>('.cos-linha:has(a, button)')).map((line) => ({
+    // linhas com link: fora da janela do ato ficam invisíveis, então saem da ordem do Tab.
+    // Filtro em JS em vez de :has() no seletor, que derruba o script no Firefox < 121.
+    const interactive = Array.from(el.querySelectorAll<HTMLElement>('.cos-linha')).filter((line) => line.querySelector('a, button')).map((line) => ({
       line,
       section: sections.indexOf(line.closest<HTMLElement>('[data-ato]')!),
       from: Number(line.style.getPropertyValue('--de')),
       to: Number(line.style.getPropertyValue('--ate')),
     }))
+    // o trilho anda por transform; se o Tab focar um link fora da tela, o navegador rola o palco e desalinha o trilho
+    const trackLinks = Array.from(track?.querySelectorAll<HTMLElement>('a') ?? [])
 
     let shown = -1
     let frame = 0
@@ -127,6 +130,11 @@ export function Cosmos() {
       for (const it of interactive) {
         const p = ps[it.section]
         it.line.inert = !(p > it.from && p < it.to)
+      }
+      const vw = window.innerWidth
+      for (const link of trackLinks) {
+        const r = link.getBoundingClientRect()
+        link.inert = r.left < 0 || r.right > vw
       }
     }
     const onScroll = () => {

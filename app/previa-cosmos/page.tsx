@@ -1,13 +1,6 @@
-import type { Metadata } from 'next'
-import { Cosmos } from '../../components/cosmos/Cosmos'
-import '../../components/cosmos/cosmos.css'
+import { permanentRedirect } from 'next/navigation'
 
-// Prévia da versão cósmica do portfólio: fora do índice até virar a página principal.
-export const metadata: Metadata = {
-  title: 'Prévia cosmos',
-  robots: { index: false, follow: false },
-}
-
+// A prévia virou a home; o endereço antigo continua valendo para links já compartilhados.
 export default function CosmosPreview() {
-  return <Cosmos />
+  permanentRedirect('/')
 }
