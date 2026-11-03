@@ -29,6 +29,8 @@ export function Intro({ ready, scene }: { ready: boolean; scene: (dive: Dive) =>
       // armazenamento bloqueado pelo navegador: a abertura só volta a aparecer no próximo carregamento
     }
     delete document.documentElement.dataset.intro
+    // a barra de rolagem volta e a página fica mais estreita sem disparar resize: o trilho precisa se medir de novo
+    window.dispatchEvent(new Event('resize'))
     setOn(false)
   }
 
@@ -69,7 +71,11 @@ export function Intro({ ready, scene }: { ready: boolean; scene: (dive: Dive) =>
 
   const enter = () => {
     dive.start = performance.now() / 1000
-    if (sound) playDive()
+    try {
+      if (sound) playDive()
+    } catch {
+      // navegador sem Web Audio ou que recusou o áudio: o mergulho segue em silêncio
+    }
     setPhase('dive')
     window.setTimeout(finish, DIVE.end * 1000)
   }
@@ -86,7 +92,7 @@ export function Intro({ ready, scene }: { ready: boolean; scene: (dive: Dive) =>
     >
       <div className="cos-intro-cena">{scene(dive)}</div>
       <div className="cos-intro-clarao" aria-hidden="true" />
-      <div className="cos-intro-ui">
+      <div className="cos-intro-ui" inert={phase === 'dive'}>
         <p className="cos-intro-marca"><span>+</span>{site.name.toUpperCase()}</p>
         <div className="cos-intro-cantos">
           <button type="button" aria-pressed={sound} onClick={() => setSound(!sound)}>som {sound ? 'ligado' : 'desligado'}</button>
