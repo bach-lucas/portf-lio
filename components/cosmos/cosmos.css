@@ -609,7 +609,19 @@ html:has(.cos-raiz) body {
   }
   /* no celular o astro fica atrás do texto: a sombra mantém a leitura */
   .cos-raiz main {
+    --sub: rgba(244, 241, 234, 0.85);
     text-shadow: 0 1px 18px rgba(5, 6, 10, 0.9);
+  }
+  /* a sombra não vence o núcleo claro da estrela: a coluna ganha um vidro escuro por cima dele */
+  .cos-coluna {
+    /* margem negativa = padding: o vidro cresce para fora sem tirar altura nem largura do texto */
+    margin: -14px -12px;
+    padding: 14px 12px;
+    width: calc(100% + 24px);
+    border-radius: 18px;
+    background: rgba(5, 6, 10, 0.6);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
   }
   .cos-role {
     display: none;
@@ -658,12 +670,6 @@ html:has(.cos-raiz) body {
     margin-top: 16px !important;
     font-size: 15px;
   }
-  .cos-tempo p {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-  }
   .cos-passos p,
   .cos-tempo p {
     font-size: 13px;
@@ -679,6 +685,16 @@ html:has(.cos-raiz) body {
   }
   .cos-planeta-img {
     aspect-ratio: 16 / 8;
+  }
+}
+
+/* só fora do celular: lá as descrições da trajetória ficam escondidas, e este display as traria de volta */
+@media (min-width: 861px) and (max-height: 960px) {
+  .cos-tempo p {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
   }
 }
 
