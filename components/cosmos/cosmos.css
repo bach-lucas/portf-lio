@@ -157,6 +157,33 @@ html:has(.cos-raiz) body {
 .cos-contato span {
   color: var(--orange);
 }
+.cos-topo-acoes {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.cos-idioma {
+  display: flex;
+  padding: 3px;
+  border: 1px solid var(--hair);
+  border-radius: 999px;
+}
+.cos-idioma a {
+  padding: 5px 9px;
+  border-radius: 999px;
+  font: 500 10px var(--mono);
+  letter-spacing: 0.14em;
+  color: var(--dim);
+  text-decoration: none;
+  transition: color 0.3s, background 0.3s;
+}
+.cos-idioma a:hover {
+  color: var(--txt);
+}
+.cos-idioma a[aria-current] {
+  background: rgba(244, 241, 234, 0.12);
+  color: var(--txt);
+}
 .cos-hud {
   position: fixed;
   left: max(16px, 4vw);
@@ -604,6 +631,10 @@ html:has(.cos-raiz) body {
   .cos-nav {
     display: none;
   }
+  .cos-marca,
+  .cos-contato {
+    white-space: nowrap;
+  }
   .cos-palco {
     padding: 92px 16px 56px;
   }
@@ -651,6 +682,13 @@ html:has(.cos-raiz) body {
   .cos-rodape {
     flex-direction: column;
     align-items: center;
+  }
+}
+
+/* celular: marca, idioma e contato não cabem numa linha; o contato continua no último ato */
+@media (max-width: 480px) {
+  .cos-topo .cos-contato {
+    display: none;
   }
 }
 

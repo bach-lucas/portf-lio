@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react'
-import { site } from '../../data/site'
+import type { Copy } from './copy'
 import { DIVE, INTRO_KEY, playDive } from './opening'
 import type { Dive } from './IntroScene'
 
@@ -12,7 +12,7 @@ const MIN_LOAD = 1.6
  * Abertura "antes do universo": esfera que implode e explode no clique, abrindo na nebulosa do primeiro ato.
  * `ready`: fontes carregadas e WebGL já testado. `scene`: desenha a esfera, ou nada se não houver WebGL.
  */
-export function Intro({ ready, scene }: { ready: boolean; scene: (dive: Dive) => ReactNode }) {
+export function Intro({ text, siteName, ready, scene }: { text: Copy['intro']; siteName: string; ready: boolean; scene: (dive: Dive) => ReactNode }) {
   const root = useRef<HTMLDivElement>(null)
   const counter = useRef<HTMLElement>(null)
   const enterButton = useRef<HTMLButtonElement>(null)
@@ -87,21 +87,21 @@ export function Intro({ ready, scene }: { ready: boolean; scene: (dive: Dive) =>
       className={`cos-intro${phase === 'ready' ? ' is-pronta' : ''}${phase === 'dive' ? ' is-mergulho' : ''}`}
       role="dialog"
       aria-modal="true"
-      aria-label="Abertura do portfólio"
+      aria-label={text.label}
       style={{ '--blast': `${DIVE.blast}s` } as CSSProperties}
     >
       <div className="cos-intro-cena">{scene(dive)}</div>
       <div className="cos-intro-clarao" aria-hidden="true" />
       <div className="cos-intro-ui" inert={phase === 'dive'}>
-        <p className="cos-intro-marca"><span>+</span>{site.name.toUpperCase()}</p>
+        <p className="cos-intro-marca"><span>+</span>{siteName.toUpperCase()}</p>
         <div className="cos-intro-cantos">
-          <button type="button" aria-pressed={sound} onClick={() => setSound(!sound)}>som {sound ? 'ligado' : 'desligado'}</button>
-          <button type="button" onClick={finish}>pular <span>↗</span></button>
+          <button type="button" aria-pressed={sound} onClick={() => setSound(!sound)}>{sound ? text.soundOn : text.soundOff}</button>
+          <button type="button" onClick={finish}>{text.skip} <span>↗</span></button>
         </div>
         <div className="cos-intro-centro">
-          <p className="cos-intro-n">antes do universo <i /> <b ref={counter}>000</b></p>
-          <button ref={enterButton} type="button" className="cos-intro-entrar" disabled={phase !== 'ready'} onClick={enter}>Entrar no universo</button>
-          <p className="cos-intro-dica">{sound ? 'melhor com fone de ouvido' : 'sem som'}</p>
+          <p className="cos-intro-n">{text.before} <i /> <b ref={counter}>000</b></p>
+          <button ref={enterButton} type="button" className="cos-intro-entrar" disabled={phase !== 'ready'} onClick={enter}>{text.enter}</button>
+          <p className="cos-intro-dica">{sound ? text.tipSound : text.tipMuted}</p>
         </div>
       </div>
     </div>
